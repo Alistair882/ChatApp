@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">ChatChaps</a>
+      @if (loggedin) 
+      {
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
             <a class="nav-link">Friends</a>
@@ -9,13 +11,42 @@
             <a class="nav-link">Lists</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Messeges</a>
+            <a class="nav-link">Messages</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" placeholder="Username">
-          <input class="form-control me-2" placeholder="Username" type="password">
+      }
+
+      @if (loggedin)
+      {
+        <div dropdown class="dropdown">
+          <a dropdownToggle class="dropdown-toggle text-light">Welcome {{model.username}}</a>
+            <div *dropdownMenu class="dropdown-menu">
+              <a class="dropdown-item">Edit Profile</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
+        </div>
+      }
+
+      @if (!loggedin)
+      {
+        <form #loginFor="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off">
+          <input
+          name="username"
+          [(ngModel)]="model.username"
+          class="form-control me-2"
+          placeholder="Username">
+
+          <input
+          name="password"
+          class="form-control me-2"
+          [(ngModel)]="model.password"
+          placeholder="password"
+          type="password">
+
           <button class="btn btn-outline-success" type="submit">Login</button>
         </form>
+      }
+
     </div>
   </nav>
