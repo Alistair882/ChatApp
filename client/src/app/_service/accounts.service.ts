@@ -48,17 +48,4 @@ export class AccountsService {
     this.currentUser.set(null);
   }
 
-  getCurrentUser()
-  {
-    const currentUserString = localStorage.getItem('user');
-    if (!currentUserString) 
-    {
-      const noUser = "user"
-      return noUser;
-    }
-
-    const currentUser = JSON.parse(currentUserString);
-    return currentUser.username
-  }
-
 }
