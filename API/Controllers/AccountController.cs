@@ -19,23 +19,24 @@ public class AccountController(DataContext context, ITokenService tokenService) 
             return BadRequest("Username is taken");
         }
 
-        using var hmac = new HMACSHA512();
+        return Ok();
+        // using var hmac = new HMACSHA512();
 
-        var user = new AppUser
-        {
-            UserName = registerDTO.Username.ToLower(),
-            passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
-            passwordSalt = hmac.Key
-        };
+        // var user = new AppUser
+        // {
+        //     UserName = registerDTO.Username.ToLower(),
+        //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
+        //     PasswordSalt = hmac.Key
+        // };
 
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
+        // context.Users.Add(user);
+        // await context.SaveChangesAsync();
 
-        return new UserDTO
-        {
-            Username = user.UserName,
-            token = tokenService.CreateToken(user)
-        };
+        // return new UserDTO
+        // {
+        //     Username = user.UserName,
+        //     token = tokenService.CreateToken(user)
+        // };
     }
 
     [HttpPost("login")]
@@ -48,13 +49,13 @@ public class AccountController(DataContext context, ITokenService tokenService) 
             return Unauthorized("Invalid username or password");
         }
 
-        using var hmac = new HMACSHA512(user.passwordSalt);
+        using var hmac = new HMACSHA512(user.PasswordSalt);
 
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
 
         for (int i = 0; i < computedHash.Length; i++)
         {
-            if (computedHash[i] != user.passwordHash[i])
+            if (computedHash[i] != user.PasswordHash[i])
             {
                 return Unauthorized("Invalid password");
             }
