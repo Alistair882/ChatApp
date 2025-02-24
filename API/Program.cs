@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.MiddleWare;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,7 +10,8 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+app.UseMiddleware<ExceptionMiddleWare>();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost:8080"));
 
 app.UseAuthentication();
 app.UseAuthorization();
