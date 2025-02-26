@@ -25,13 +25,14 @@ public class AppUser
     public string? UserEmail { get; set; }
     public string? Interests { get; set;}
 
-    public string UserCountry { get; set; }
+    public string? UserCountry { get; set; }
+    public string? UserCity { get; set; }
 
-    public List<ProfilePictures> ProfilePicture { get; set; }
+    public List<ProfilePicture> ProfilePicture { get; set; } = [];
 
-    public int GetAge()
-    {
-        return DateOfBirth.CalculateAge();
-    }
+    // public int GetAge()
+    // {
+    //     return DateOfBirth.CalculateAge();
+    // }
 
 }
