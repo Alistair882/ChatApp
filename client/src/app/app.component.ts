@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NavComponent } from "./nav/nav.component";
-import { AccountsService } from './_service/accounts.service';
+import { AccountsService } from './_services/accounts.service';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

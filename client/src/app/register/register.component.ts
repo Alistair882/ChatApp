@@ -1,6 +1,6 @@
 import { Component, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AccountsService } from '../_service/accounts.service';
+import { AccountsService } from '../_services/accounts.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
