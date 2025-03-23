@@ -1,0 +1,74 @@
+@if (member) {
+  <div class="row">
+    <div class="col-4">
+      <h1>you profile</h1>
+    </div>
+    <div class="col-8">
+      @if (editForm.dirty)
+      {
+        <div class="alert alert-info">
+          <p><strong>Information:</strong> You have made changes, any unsaved changes will be lost</p>
+        </div>
+      }
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <img
+          src="{{ member.photoUrl || '.assets/user.png' }}"
+          alt="{{ member.userAlias }}"
+          class="card-img img-thumbnail"
+        />
+        <div class="card-body">
+          <div>
+            <strong>From:</strong>
+            <p>{{ member.userCity }}, {{ member.userCountry }}</p>
+          </div>
+          <div>
+            <strong>Last Active:</strong>
+            <p>{{ member.lastActive }}</p>
+          </div>
+          <div>
+            <strong>Member since:</strong>
+            <p>{{ member.created }}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="btn d-flex">
+            <button form="editForm" type="submit" class="col-12 btn btn-success" [disabled]="!editForm.dirty">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <tabset class="member-tabset">
+        <tab heading="About {{ member.userAlias }}">
+          <form id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()">
+            <h4 class="mt-2">About me</h4>
+            <textarea name="aboutMe" [(ngModel)]="member.aboutMe" rows="6" id="" class="form-control"></textarea>
+            <h4 class="mt-2">Interests</h4>
+            <textarea name="interests" [(ngModel)]="member.interests" rows="6" id="" class="form-control"></textarea>
+
+          <h2>Location details</h2>
+          <div class="d-flex flex-column align-items-start me-5">
+            <div class="mb-3">
+              <label class="city">City:</label>
+              <input type="text" name="userCity" [(ngModel)]="member.userCity" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label class="city">Country:</label>
+              <input type="text" name="userCountry" [(ngModel)]="member.userCountry" class="form-control" />
+            </div>
+          </div>
+        </form>
+        </tab>
+        <tab heading="Friends">
+          Friend list here
+        </tab>
+        <tab heading="Profile picture">
+          profile pic here
+        </tab>
+      </tabset>
+    </div>
+  </div>
+  }
+  
