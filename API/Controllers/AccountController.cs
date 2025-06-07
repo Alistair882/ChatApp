@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.DTOs;
-using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,8 +41,9 @@ public class AccountController(DataContext context, ITokenService tokenService) 
     [HttpPost("login")]
     public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
     {
-        var user = await context.Users.FirstOrDefaultAsync(x =>
-                                                           x.UserName == loginDTO.UserName.ToLower());
+        var user = await context.Users
+            .Include(u => u.ProfilePicture)
+            .FirstOrDefaultAsync(x => x.UserName == loginDTO.UserName.ToLower());
         if (user == null)
         {
             return Unauthorized("Invalid username or password");
@@ -64,7 +64,8 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         return new UserDTO
         {
             Username = user.UserName,
-            token = tokenService.CreateToken(user)
+            token = tokenService.CreateToken(user),
+            userProfilePicUrl = user.ProfilePicture.FirstOrDefault(x => x.CurrentProfilePicture)?.Url
         };
     }
     private async Task<bool> userExists(string username)

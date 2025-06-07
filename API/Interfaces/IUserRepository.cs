@@ -1,4 +1,3 @@
-using System;
 using API.DTOs;
 using API.Entities;
 
@@ -10,7 +9,7 @@ public interface IUserRepository
     Task<bool> SaveAllAsync();
     Task<IEnumerable<AppUser>> GetUsersAsync();
     Task<AppUser?> GetAppUserByIdAsync(int id);
-    Task<AppUser?> GetAppUserByUserName(string userName);
+    Task<AppUser?> GetAppUserByUserNameAsync(string userName);
     Task<IEnumerable<MemberDTO>> GetMembersAsync();
     Task<MemberDTO?> GetMemberAsync(string userName);
 }

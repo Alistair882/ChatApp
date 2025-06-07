@@ -24,6 +24,10 @@
       @if (accountService.currentUser())
       {
         <div dropdown class="dropdown">
+          <img class="profilePicNav me-2"
+            src="{{accountService.currentUser()?.userProfilePicUrl || './assets/user.png'}}" 
+            alt="User profile pic"
+            style="max-height: 50px; max-width: 50px; border: 2px solid #cccccc; object-fit: cover;"> <!-- styling inline because in the css, the image is too large when refreshing or loading. -->
           <a dropdownToggle class="dropdown-toggle text-light">Welcome @if (accountService.currentUser()?.username)
             {
             {{accountService.currentUser()?.username | titlecase}}

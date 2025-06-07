@@ -1,4 +1,3 @@
-using System;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
@@ -15,7 +14,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         return await context.Users.FindAsync(id);
     }
 
-    public async Task<AppUser?> GetAppUserByUserName(string userName)
+    public async Task<AppUser?> GetAppUserByUserNameAsync(string userName)
     {
         return await context.Users
             .Include(x => x.ProfilePicture)

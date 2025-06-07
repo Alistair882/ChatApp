@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs;
@@ -9,4 +8,6 @@ public class UserDTO
     public string Username { get; set; }
     [Required]
     public string token { get; set; }
+
+    public string? userProfilePicUrl { get; set; }
 }

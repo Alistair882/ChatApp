@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="col-8">
-      <tabset class="member-tabset">
+      <tabset class="member-tabset me-2">
         <tab heading="About {{ member.userAlias }}">
           <form id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()">
             <h4 class="mt-2">About me</h4>
@@ -65,7 +65,9 @@
           Friend list here
         </tab>
         <tab heading="Profile picture">
-          profile pic here
+          <app-image-editor 
+          [member]="member"
+          (memberChange)="onMemberChange($event)"></app-image-editor>
         </tab>
       </tabset>
     </div>

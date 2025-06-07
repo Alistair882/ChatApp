@@ -4,5 +4,5 @@ public class PhotoDTO
 {
     public int Id { get; set; }
     public string Url { get; set; }
-    public bool IsCurrent { get; set; }
+    public bool CurrentProfilePicture { get; set; }
 }
