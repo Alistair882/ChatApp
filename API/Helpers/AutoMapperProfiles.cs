@@ -12,11 +12,14 @@ public class AutoMapperProfiles : Profile
         CreateMap<AppUser, MemberDTO>()
             .ForMember(d => d.Age,
                     o => o.MapFrom(s => s.DateOfBirth.CalculateAge()))
-            .ForMember(d => d.PhotoUrl, 
+            .ForMember(d => d.PhotoUrl,
                 o => o.MapFrom(s => s.ProfilePicture.FirstOrDefault(x => x.CurrentProfilePicture)!.Url));
         CreateMap<ProfilePicture, PhotoDTO>();
         CreateMap<MemberUpdateDTO, AppUser>();
+        CreateMap<RegisterDTO, AppUser>()
+            .ForMember(dest => dest.UserAlias, opt => opt.MapFrom(src => src.KnownAs));
+        CreateMap<string, DateOnly>()
+            .ConvertUsing(date => DateOnly.Parse(date));
     }
-
 
 }

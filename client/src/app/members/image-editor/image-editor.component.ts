@@ -25,6 +25,9 @@ export class ImageEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.iniatilizeUploader();
+    for (const image of this.member().profilePicture) {
+      console.log(image);
+    }
   }
 
   fileOverBase(e: any) {
@@ -56,7 +59,7 @@ export class ImageEditorComponent implements OnInit {
     }
 
     deleteProfilePicture(image: ProfilePicture) {
-      this.memberService.deleteImage(image).subscribe({
+      this.memberService.deleteImage(image, this.member().id).subscribe({
         next: _ => {
           const updatedMember = {...this.member()}
           updatedMember.profilePicture = updatedMember.profilePicture.filter(i => i.id !== image.id);
@@ -76,12 +79,11 @@ export class ImageEditorComponent implements OnInit {
           const updatedMember = {...this.member()}
           updatedMember.photoUrl = image.url;
           updatedMember.profilePicture.forEach(i => {
-            if(i.CurrentProfilePicture) i.CurrentProfilePicture = false;
-            if(i.id === image.id) i.CurrentProfilePicture = true;
+            if(i.currentProfilePicture) i.currentProfilePicture = false;
+            if(i.id === image.id) i.currentProfilePicture = true;
           });
           this.memberChange.emit(updatedMember);
         }
       });
     }
-
 }

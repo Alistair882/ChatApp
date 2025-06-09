@@ -47,15 +47,24 @@ export class MembersService {
     );
   }
 
-  deleteImage(image: ProfilePicture) {
+  deleteImage(image: ProfilePicture, memberID: number) {
     return this.http.delete(this.baseUrl + 'users/delete-image/' + image.id).pipe(
       tap(() => {
-        this.members.update(members => members.map(x => {
-          if (x.profilePicture.includes(image)) {
-            x.profilePicture = x.profilePicture.filter(p => p.id !== image.id);
+        this.members.update(members => {
+          const memberIdex = members.findIndex(x => x.id === memberID);
+          if (memberIdex !== -1) {
+            const updatedMember = {
+              ...members[memberIdex],
+              profilePicture: members[memberIdex].profilePicture.filter(p => p.id !== image.id)
+            };
+            return [
+              ...members.slice(0, memberIdex),
+              updatedMember,
+              ...members.slice(memberIdex + 1)
+            ];
           }
-          return x;
-        }));
+          return members;
+        });
       })
     );
   }
